@@ -2,7 +2,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'home_page.dart';
+import '../services/history_repository.dart';
+import 'onboarding_screen.dart';
+import 'root_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -15,14 +17,23 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // Navigate to the HomePage after a delay
-    Timer(const Duration(seconds: 4), () {
-      if (mounted) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const HomePage()),
-        );
-      }
-    });
+    _navigateToNextScreen();
+  }
+
+  void _navigateToNextScreen() async {
+    // Wait for the splash animation
+    await Future.delayed(const Duration(seconds: 4));
+
+    if (!mounted) return;
+
+    final hasOnboarded = await HistoryRepository().getOnboarded();
+
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) =>
+            hasOnboarded ? const RootScreen() : const OnboardingScreen(),
+      ),
+    );
   }
 
   @override

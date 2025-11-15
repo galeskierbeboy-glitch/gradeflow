@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
-import 'essay_page.dart';
-import 'interview_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -95,7 +93,8 @@ class HomePage extends StatelessWidget {
                           width: 260,
                           child: _TechnoButton(
                             label: "Essay Assistant",
-                            onPressed: () => _navigateToEssay(context),
+                            onPressed: () =>
+                                Navigator.pushNamed(context, '/essay'),
                           ),
                         ),
                         const SizedBox(height: 16),
@@ -103,12 +102,8 @@ class HomePage extends StatelessWidget {
                           width: 260,
                           child: _TechnoButton(
                             label: "Interview Prep",
-                            onPressed: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => const InterviewPage(),
-                              ),
-                            ),
+                            onPressed: () =>
+                                Navigator.pushNamed(context, '/interview'),
                           ),
                         ),
                       ],
@@ -119,23 +114,6 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  void _navigateToEssay(BuildContext context) {
-    Navigator.push(
-      context,
-      PageRouteBuilder(
-        pageBuilder: (_, __, ___) => const EssayPage(),
-        transitionDuration: const Duration(milliseconds: 600),
-        transitionsBuilder: (c, anim, secAnim, child) {
-          final slide = Tween<Offset>(
-            begin: const Offset(0, 1),
-            end: Offset.zero,
-          ).chain(CurveTween(curve: Curves.easeOutCubic)).animate(anim);
-          return SlideTransition(position: slide, child: child);
-        },
       ),
     );
   }

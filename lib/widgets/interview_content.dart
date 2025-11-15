@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'activation_button.dart';
 
 class InterviewContent extends StatelessWidget {
   final bool isLast;
@@ -49,17 +50,10 @@ class InterviewContent extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              ElevatedButton.icon(
+              ActivationButton(
                 onPressed: onFinish,
-                icon: const Icon(Icons.star),
-                label: const Text("Get AI Feedback"),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepPurple,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 30,
-                    vertical: 15,
-                  ),
-                ),
+                icon: Icons.star,
+                label: "Get AI Feedback",
               ),
             ],
           )
@@ -166,40 +160,20 @@ class InterviewContent extends StatelessWidget {
               // Voice and submit buttons
               Row(
                 children: [
-                  ElevatedButton.icon(
-                    onPressed: onToggleListening,
-                    icon: Icon(
-                      isListening ? Icons.mic : Icons.mic_none,
-                      color: Colors.white,
-                    ),
-                    label: Text(
-                      isListening ? "Listening..." : "Speak",
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: isListening
-                          ? Colors.red
-                          : Colors.blueAccent,
+                  Expanded(
+                    child: ActivationButton(
+                      onPressed: onToggleListening,
+                      icon: isListening ? Icons.mic : Icons.mic_none,
+                      label: isListening ? "Listening..." : "Speak",
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
-                    child: ElevatedButton.icon(
+                    child: ActivationButton(
                       onPressed: isLoading ? null : onNext,
-                      icon: const Icon(
-                        Icons.arrow_forward,
-                        color: Colors.white,
-                      ),
-                      label: Text(
-                        isLoading ? "Submitting..." : "Next",
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.deepPurple,
-                        disabledBackgroundColor: Colors.deepPurple.withAlpha(
-                          128,
-                        ),
-                      ),
+                      icon: Icons.arrow_forward,
+                      label: isLoading ? "Submitting..." : "Next",
+                      isLoading: isLoading,
                     ),
                   ),
                 ],

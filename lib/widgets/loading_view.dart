@@ -14,7 +14,7 @@ class LoadingView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Lottie.asset(
-            'assets/aiai.json',
+            'assets/ai_animation.json',
             width: 180,
             height: 180,
             repeat: true,

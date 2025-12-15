@@ -8,6 +8,7 @@ import '../widgets/gradient_background.dart';
 import '../widgets/loading_view.dart';
 import '../widgets/interview_controls.dart';
 import '../widgets/interview_content.dart';
+import '../widgets/glass_card.dart';
 
 class InterviewPage extends StatefulWidget {
   const InterviewPage({super.key});
@@ -167,10 +168,7 @@ class _InterviewPageState extends State<InterviewPage> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.white,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
-      ),
+      backgroundColor: Colors.transparent,
       builder: (context) => Padding(
         padding: EdgeInsets.only(
           left: 20,
@@ -179,49 +177,52 @@ class _InterviewPageState extends State<InterviewPage> {
           bottom: MediaQuery.of(context).viewInsets.bottom + 20,
         ),
         child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: 60,
-                height: 6,
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
-                  borderRadius: BorderRadius.circular(3),
+          child: GlassCard(
+            borderRadius: 20,
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 60,
+                  height: 6,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.12),
+                    borderRadius: BorderRadius.circular(3),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              const Text(
-                "✨ AI Interview Feedback",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 10),
-              _buildFeedbackContent(feedbackMap),
-              const SizedBox(height: 20),
-              Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton.icon(
-                      icon: const Icon(Icons.picture_as_pdf_outlined),
-                      label: const Text("Export PDF"),
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.blueAccent,
-                        backgroundColor: Colors.blue.shade50,
+                const SizedBox(height: 20),
+                const Text(
+                  "✨ AI Interview Feedback",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+                ),
+                const SizedBox(height: 10),
+                _buildFeedbackContent(feedbackMap),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: GlassButton(
+                        onPressed: () => _pdfService.generateReport(feedbackMap),
+                        color: Colors.indigoAccent,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [Icon(Icons.picture_as_pdf_outlined), SizedBox(width: 8), Text('Export PDF')],
+                        ),
                       ),
-                      onPressed: () => _pdfService.generateReport(feedbackMap),
                     ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: ElevatedButton.icon(
-                      icon: const Icon(Icons.close),
-                      label: const Text("Close"),
-                      onPressed: () => Navigator.pop(context),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: GlassButton(
+                        onPressed: () => Navigator.pop(context),
+                        color: Colors.white24,
+                        child: const Text('Close'),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

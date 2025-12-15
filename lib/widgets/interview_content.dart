@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'glass_card.dart';
 
 class InterviewContent extends StatelessWidget {
   final bool isLast;
@@ -36,7 +37,7 @@ class InterviewContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (isLast)
-          Column(
+              Column(
             children: [
               const Icon(Icons.check_circle, size: 60, color: Colors.green),
               const SizedBox(height: 20),
@@ -49,16 +50,12 @@ class InterviewContent extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              ElevatedButton.icon(
+              GlassButton(
                 onPressed: onFinish,
-                icon: const Icon(Icons.star),
-                label: const Text("Get AI Feedback"),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepPurple,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 30,
-                    vertical: 15,
-                  ),
+                color: Colors.deepPurple,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: const [Icon(Icons.star), SizedBox(width: 8), Text('Get AI Feedback')],
                 ),
               ),
             ],
@@ -79,22 +76,9 @@ class InterviewContent extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: remainingTime <= 10
-                          ? Colors.red.withAlpha(77)
-                          : Colors.white.withAlpha(26),
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: remainingTime <= 10
-                            ? Colors.red
-                            : Colors.white.withAlpha(77),
-                      ),
-                    ),
+                  GlassCard(
+                    borderRadius: 20,
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                     child: Text(
                       "${remainingTime}s",
                       style: TextStyle(
@@ -108,13 +92,8 @@ class InterviewContent extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               // Question text
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.white.withAlpha(26),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.white.withAlpha(51)),
-                ),
+              GlassCard(
+                borderRadius: 12,
                 child: Text(
                   currentQuestion ?? "Loading...",
                   style: const TextStyle(
@@ -136,29 +115,17 @@ class InterviewContent extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               // Answer text field
-              TextField(
-                controller: answerController,
-                maxLines: 5,
-                style: const TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  hintText: "Type or speak your answer...",
-                  hintStyle: const TextStyle(color: Colors.white54),
-                  filled: true,
-                  fillColor: Colors.white.withAlpha(26),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: Colors.white.withAlpha(51)),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: Colors.white.withAlpha(51)),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(
-                      color: Colors.deepPurple,
-                      width: 2,
-                    ),
+              GlassCard(
+                borderRadius: 12,
+                padding: const EdgeInsets.all(8),
+                child: TextField(
+                  controller: answerController,
+                  maxLines: 5,
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    hintText: "Type or speak your answer...",
+                    hintStyle: const TextStyle(color: Colors.white54),
+                    border: InputBorder.none,
                   ),
                 ),
               ),
@@ -166,40 +133,24 @@ class InterviewContent extends StatelessWidget {
               // Voice and submit buttons
               Row(
                 children: [
-                  ElevatedButton.icon(
+                  GlassButton(
                     onPressed: onToggleListening,
-                    icon: Icon(
-                      isListening ? Icons.mic : Icons.mic_none,
-                      color: Colors.white,
-                    ),
-                    label: Text(
-                      isListening ? "Listening..." : "Speak",
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: isListening
-                          ? Colors.red
-                          : Colors.blueAccent,
+                    color: isListening ? Colors.red : Colors.blueAccent,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(isListening ? Icons.mic : Icons.mic_none),
+                        const SizedBox(width: 8),
+                        Text(isListening ? "Listening..." : "Speak"),
+                      ],
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
-                    child: ElevatedButton.icon(
+                    child: GlassButton(
                       onPressed: isLoading ? null : onNext,
-                      icon: const Icon(
-                        Icons.arrow_forward,
-                        color: Colors.white,
-                      ),
-                      label: Text(
-                        isLoading ? "Submitting..." : "Next",
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.deepPurple,
-                        disabledBackgroundColor: Colors.deepPurple.withAlpha(
-                          128,
-                        ),
-                      ),
+                      color: Colors.deepPurple,
+                      child: Text(isLoading ? "Submitting..." : "Next"),
                     ),
                   ),
                 ],

@@ -3,7 +3,7 @@ import 'package:firebase_ai/firebase_ai.dart';
 
 class InterviewAIService {
   final model = FirebaseAI.googleAI().generativeModel(
-    model: 'gemini-2.5-flash-lite',
+    model: 'gemini-2.5-flash',
   );
 
   /// ==============================

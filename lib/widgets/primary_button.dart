@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'glass_card.dart';
 
 class PrimaryButton extends StatelessWidget {
   final String label;
@@ -14,24 +15,25 @@ class PrimaryButton extends StatelessWidget {
     this.expanded = true,
   });
 
+  Color _brandColor() {
+    if (icon == Icons.upload_file) return Colors.indigoAccent;
+    if (icon == Icons.auto_fix_high) return Colors.cyan;
+    return Colors.deepPurple;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final btn = ElevatedButton.icon(
+    final btn = GlassButton(
       onPressed: onPressed,
-      icon: Icon(icon ?? Icons.check, size: 20, color: Colors.white),
-      label: Text(
-        label,
-        style: const TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-          color: Colors.white,
-        ),
-      ),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.black,
-        disabledBackgroundColor: Colors.black54,
-        minimumSize: const Size.fromHeight(52),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      color: _brandColor(),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (icon != null) Icon(icon, size: 18),
+          if (icon != null) const SizedBox(width: 8),
+          Text(label),
+        ],
       ),
     );
 

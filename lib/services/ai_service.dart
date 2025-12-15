@@ -5,7 +5,7 @@ class AIService {
   // Use VertexAI to create a GenerativeModel. gemini-1.5 is retired; use
   // a current Gemini model. You can change this string as needed.
   final model = FirebaseAI.googleAI().generativeModel(
-    model: 'gemini-2.5-flash-lite',
+    model: 'gemini-2.5-flash',
   );
 
   Future<String> getEssayFeedback(String essayText) async {

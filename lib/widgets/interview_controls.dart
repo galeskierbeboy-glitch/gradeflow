@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'glass_card.dart';
 
 class InterviewControls extends StatelessWidget {
   final String selectedNiche;
@@ -25,14 +26,9 @@ class InterviewControls extends StatelessWidget {
     return Row(
       children: [
         // Restart Button
-        ElevatedButton(
+        GlassButton(
           onPressed: onRestart,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.white24,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
+          color: Colors.white24,
           child: const Icon(Icons.refresh, color: Colors.white),
         ),
         const SizedBox(width: 10),
@@ -54,21 +50,19 @@ class InterviewControls extends StatelessWidget {
     List<String> items,
     Function(String?) onChanged,
   ) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-      ),
+    return GlassCard(
+      borderRadius: 12,
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
           value: value,
           isExpanded: true,
+          dropdownColor: Colors.black87,
           items: items
               .map(
                 (k) => DropdownMenuItem(
                   value: k,
-                  child: Text(k, overflow: TextOverflow.ellipsis),
+                  child: Text(k, overflow: TextOverflow.ellipsis, style: const TextStyle(color: Colors.white)),
                 ),
               )
               .toList(),
